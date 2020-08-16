@@ -1,10 +1,17 @@
 package Client;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+
+import ClientServerCommunication.ClientActions;
+import ClientServerCommunication.ClientServerObject;
 
 
 public class Client { // Client object is in charge of the communication with the server
@@ -12,11 +19,24 @@ public class Client { // Client object is in charge of the communication with th
 	private static Client clientInstance = null; // Instance of Client (Using Singleton)
 	private InetAddress host;
 	private Socket socket;
-	private ObjectOutputStream oos;
-	private ObjectInputStream ois;
+	private ObjectOutputStream  output;
+	private ObjectInputStream input;
+	private ClientServerObject clientServerObject; // Client-Server translator
 	
+	private boolean isConnected = false;
 	
-	private Client() {}
+	private Client() {
+		try {
+			this.host = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        this.socket = null;
+        this.output = null;
+        this.input = null;	
+        this.clientServerObject = new ClientServerObject();
+	}
 	
 	public static Client getInstance() // get the instance of Client
     { 
@@ -27,24 +47,19 @@ public class Client { // Client object is in charge of the communication with th
     } 
 	
 	// try to login to the system by checking the userID, accountID and password
-	public void tryToConnect(String userID, String accountID, String password) throws UnknownHostException,
-	IOException, ClassNotFoundException, InterruptedException{
+	public void tryToConnect(String userID, String accountID, String password) throws IOException,
+	ClassNotFoundException, InterruptedException{
 		
-		this.host = InetAddress.getLocalHost();
-        this.socket = null;
-        this.oos = null;
-        this.ois = null;
+		this.clientServerObject.setClientAction(ClientActions.LOGIN);
+		this.clientServerObject.clearData();
+		this.clientServerObject.addDataToSend(userID, accountID, password);
+		
         
         this.socket = new Socket(host.getHostName(), 9876);
-        this.oos = new ObjectOutputStream(socket.getOutputStream());
-        System.out.println("Sending request to Socket Server");
+        this.output = new ObjectOutputStream(socket.getOutputStream());
         
-        this.ois = new ObjectInputStream(socket.getInputStream());
-        String message = (String) ois.readObject();
-        System.out.println("Message: " + message);
-        //close resources
-        this.ois.close();
-        this.oos.close();
+        output.writeObject(this.clientServerObject);
+        System.out.println("Object was sent to server.");
         
 	}
 }
