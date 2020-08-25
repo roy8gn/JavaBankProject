@@ -10,21 +10,20 @@
    <children>
       <Pane layoutY="-17.0" prefHeight="619.0" prefWidth="463.0">
          <children>
-            <Label layoutX="138.0" layoutY="83.0" prefHeight="51.0" prefWidth="202.0" text="JBank Digital">
+            <Label fx:id="mainLabel" layoutX="146.0" layoutY="83.0" prefHeight="51.0" prefWidth="202.0" text="JBank Digital">
                <font>
                   <Font size="35.0" />
                </font>
             </Label>
-            <Label layoutX="64.0" layoutY="214.0" prefHeight="21.0" prefWidth="66.0" text="User ID:" />
-            <Label layoutX="64.0" layoutY="299.0" text="Password:" />
-            <TextField fx:id="userIDText" layoutX="186.0" layoutY="209.0" promptText="Enter Your ID" />
+            <Label layoutX="64.0" layoutY="209.0" prefHeight="31.0" prefWidth="107.0" text="User ID:" />
+            <Label layoutX="64.0" layoutY="294.0" prefHeight="31.0" prefWidth="107.0" text="Password:" />
+            <TextField fx:id="userIDText" layoutX="207.0" layoutY="209.0" promptText="Enter Your ID" />
             <Button fx:id="connectBtn" layoutX="186.0" layoutY="354.0" mnemonicParsing="false" onAction="#TryToConnect" text="Connect" />
-            <Button fx:id="ForgotMyPasswordBtn" layoutX="239.0" layoutY="523.0" mnemonicParsing="false" text="Forgot My Password" />
-            <Button fx:id="createNewAcoountBtn" layoutX="68.0" layoutY="523.0" mnemonicParsing="false" text="Create New Account" />
+            <Button fx:id="ForgotMyPasswordBtn" layoutX="145.0" layoutY="531.0" mnemonicParsing="false" text="Forgot My Password" />
             <Label layoutX="74.0" layoutY="484.0" text="Problem Connecting?" />
-            <PasswordField fx:id="passwordText" layoutX="186.0" layoutY="294.0" promptText="Enter your password" />
-            <TextField fx:id="accountIDText" layoutX="186.0" layoutY="251.0" promptText="Enter Account ID" />
-            <Label layoutX="64.0" layoutY="256.0" prefHeight="21.0" prefWidth="81.0" text="Account ID:" />
+            <PasswordField fx:id="passwordText" layoutX="207.0" layoutY="294.0" promptText="Enter your password" />
+            <TextField fx:id="accountIDText" layoutX="207.0" layoutY="251.0" promptText="Enter Account ID" />
+            <Label layoutX="64.0" layoutY="251.0" prefHeight="31.0" prefWidth="107.0" text="Account ID:" />
          </children>
       </Pane>
    </children>

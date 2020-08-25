@@ -1,29 +1,26 @@
 package Server;
 
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.ClassNotFoundException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
+
 
 public class Server{
 
 	
 	static int port = 9876;
     private static ServerSocket serverSocket;
-    
-    
+    public static DataBaseHandler dataBase;
     public static void main(String args[]) throws IOException, ClassNotFoundException{
     	
     	serverSocket = new ServerSocket(port);
+    	dataBase = DataBaseHandler.getInstance();
     	System.out.println("Server is on.");
     	// running infinite loop for getting 
         // client request 
@@ -39,11 +36,11 @@ public class Server{
                 System.out.println("A new client is connected : " + socket); 
                   
                 // obtaining input and out streams 
-                ObjectInputStream dis = new ObjectInputStream(socket.getInputStream()); 
-                ObjectOutputStream dos = new ObjectOutputStream(socket.getOutputStream());  
+                ObjectInputStream input = new ObjectInputStream(socket.getInputStream()); 
+                ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());  
   
                 // create a new thread object 
-                Thread t = new ClientHandler(socket, dis, dos); 
+                Thread t = new ClientHandler(socket, input, output); 
   
                 // Invoking the start() method 
                 t.start(); 
@@ -55,6 +52,10 @@ public class Server{
             } 
         }
     	
+    }
+    
+    public static DataBaseHandler getDataBaseInstance() {
+    	return dataBase;
     }
 
 }

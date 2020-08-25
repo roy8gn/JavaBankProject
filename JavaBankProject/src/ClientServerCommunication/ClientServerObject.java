@@ -3,20 +3,35 @@ package ClientServerCommunication;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
 /*
  * An object that will allow a common way to communicate and pass
  * data between the Client and the Server
  */
 public class ClientServerObject implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static ClientServerObject instance = null; // Instance of ClientServerObject (Using Singleton)
 	private ClientActions clientAction;
 	private ArrayList<Object> dataToSend;
+	private ActionResult actionResult;
+
 	
-	
-	public ClientServerObject() {
+	private ClientServerObject() {
+		this.clientAction = ClientActions.DEAFULT;
 		dataToSend = new ArrayList<>();
+		this.actionResult = ActionResult.DEAFULT;
 	}
 	
+	public static ClientServerObject getInstance() // get the instance of ClientServerObject
+    { 
+        if (instance == null) 
+        	instance = new ClientServerObject(); 
+        return instance; 
+    } 
 	
 	public ClientActions getClientAction() {
 		return clientAction;
@@ -37,6 +52,22 @@ public class ClientServerObject implements Serializable{
 			dataToSend.clear();
 		}
 	}
+
+	public ActionResult getActionResult() {
+		return actionResult;
+	}
+
+	public void setActionResult(ActionResult actionResult) {
+		this.actionResult = actionResult;
+	}
+
+	public void clear() {
+		clientAction = ClientActions.DEAFULT;
+		dataToSend.clear();
+		actionResult = ActionResult.DEAFULT;
+	}
+	
+	
 	
 	
 }
