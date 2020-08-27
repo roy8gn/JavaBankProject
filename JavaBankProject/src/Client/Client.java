@@ -6,10 +6,12 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import ClientServerCommunication.ActionResult;
 import ClientServerCommunication.ClientActions;
 import ClientServerCommunication.ClientServerObject;
+import ClientServerCommunication.Transaction;
 
 
 public class Client { // Client object is in charge of the communication with the server
@@ -20,7 +22,7 @@ public class Client { // Client object is in charge of the communication with th
 	private ObjectOutputStream  output;
 	private ObjectInputStream input;
 	private ClientServerObject clientServerObject; // Client-Server translator
-	private static User user;
+	private User user;
 	
 	private Client() {
 		try {
@@ -44,6 +46,7 @@ public class Client { // Client object is in charge of the communication with th
     } 
 	
 	// try to login to the system by checking the userID, accountID and password
+	@SuppressWarnings("unchecked")
 	public void tryToConnect(String userID, String accountID, String password) throws IOException,
 	ClassNotFoundException, InterruptedException{
 		
@@ -69,9 +72,9 @@ public class Client { // Client object is in charge of the communication with th
 					(String) clientServerObject.getDataToSend().get(4),
 					(String) clientServerObject.getDataToSend().get(5),
 					(String) clientServerObject.getDataToSend().get(6),
-					(Integer)clientServerObject.getDataToSend().get(7));
-			
-			//Main.getMainMenuController().setUp();
+					(Integer)clientServerObject.getDataToSend().get(7),
+					(ArrayList<Transaction>)clientServerObject.getDataToSend().get(8));
+			Main.getMainMenuController().setUp();
 			}
 		}catch (ClassNotFoundException e) {
 			System.out.println("ERROR: Couldn't login");

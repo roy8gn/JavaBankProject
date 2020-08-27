@@ -1,6 +1,9 @@
 package Client;
 
+import java.util.ArrayList;
 import java.util.Date;
+
+import ClientServerCommunication.Transaction;
 
 //import java.sql.Date;
 
@@ -15,9 +18,10 @@ public class User {
 	private String birthDate;
 	private String email1;
 	private int amount;
+	private ArrayList<Transaction> transactionsList;
 	
 	public User(String userID, String accountID, String password, String firstName, 
-			String lastName, String date, String email1, int amount) {
+			String lastName, String date, String email1, int amount, ArrayList<Transaction> transactionsList) {
 		this.userID = userID;
 		this.accountID = accountID;
 		this.password = password;
@@ -26,6 +30,15 @@ public class User {
 		this.birthDate = date;
 		this.email1 = email1;
 		this.amount = amount;
+		this.transactionsList = new ArrayList<Transaction>(transactionsList);
+	}
+	
+	public void addToTransactionsList(Transaction newTransaction) { // add new transaction to the list
+		transactionsList.add(newTransaction);
+	}
+
+	public ArrayList<Transaction> getTransactionsList() {
+		return transactionsList;
 	}
 
 	public String getUserID() {
@@ -62,5 +75,11 @@ public class User {
 
 	public String getEmail1() {
 		return email1;
-	}	
+	}
+
+	public String getBirthDate() {
+		return birthDate;
+	}
+	
+	
 }

@@ -6,9 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import ClientServerCommunication.ActionResult;
 import ClientServerCommunication.ClientServerObject;
+import ClientServerCommunication.Transaction;
 
 public class DataBaseHandler {
 
@@ -75,7 +77,6 @@ public class DataBaseHandler {
 	public void updateAccountAmount(String accountID, int amount) { // UPDATE the amount of an account
 		int accountAmount = checkCurrentAmount(accountID);
 		accountAmount = accountAmount + amount;
-		System.out.println(accountID + " cu"); 
 		PreparedStatement pstmt;
 		try {
 			pstmt = conn.prepareStatement("update javabankdb.bankaccouts set bankaccouts.amount = ? where bankaccouts.accountID = ?;");
@@ -160,23 +161,49 @@ public class DataBaseHandler {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				cso.clearData();
-				cso.addDataToSend(rs.getString(1));
-				cso.addDataToSend(rs.getString(2));
-				cso.addDataToSend(rs.getString(3));
-				cso.addDataToSend(rs.getString(4));
-				cso.addDataToSend(rs.getString(5));
-				cso.addDataToSend(rs.getString(6));
-				cso.addDataToSend(rs.getString(7));
-				cso.addDataToSend(rs.getInt(8));
+				cso.addDataToSend(rs.getString(1)); // userID
+				cso.addDataToSend(rs.getString(2)); // accountID
+				cso.addDataToSend(rs.getString(3)); // password1
+				cso.addDataToSend(rs.getString(4)); // firstName
+				cso.addDataToSend(rs.getString(5)); // lastName
+				cso.addDataToSend(rs.getString(6)); // birthDate
+				cso.addDataToSend(rs.getString(7)); // email1
+				cso.addDataToSend(rs.getInt(8)); // amount
+				getAllTransactions(cso);
 				cso.setActionResult(ActionResult.YES);
 			}
 			else {
 				cso.clearData();
 				cso.setActionResult(ActionResult.NO);
 			}
+			
 		}catch (SQLException e) {e.printStackTrace();
 		}
-
+	}
+	
+	public void getAllTransactions(ClientServerObject cso) {	
+		ArrayList<Transaction> transactionsList = new ArrayList<Transaction>();
+		PreparedStatement pstmt;
+		ResultSet rs;
+		try {
+			pstmt = conn.prepareStatement("select date1, fromAccount, amount1, toAccount from  javabankdb.transactions"
+					+ " where fromAccount=?;");
+			pstmt.setString(1, (String) cso.getDataToSend().get(1)); // accountID (after getting data from Data Base for login)
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				transactionsList.add(new Transaction(rs.getString(1), // date1
+						rs.getString(2), // fromAccount
+						rs.getInt(3), // amount1
+						rs.getString(4))); // toAccount
+			}
+			cso.addDataToSend(transactionsList);
+			//System.out.println(transactionsList);
+		} catch (SQLException e) {
+			System.out.println("ERROR: CAN'T GET BANK ACCOUNT'S TRANSACTIONS!!!");
+		}
+		
+		
+		
 	}
 	
 }

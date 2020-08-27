@@ -6,38 +6,31 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="699.0" prefWidth="1124.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.MainMenuController">
+<AnchorPane prefHeight="699.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.MainMenuController">
    <children>
-      <Pane prefHeight="699.0" prefWidth="1124.0">
+      <Pane prefHeight="699.0" prefWidth="911.0">
          <children>
             <Label layoutX="80.0" layoutY="41.0" prefHeight="69.0" prefWidth="299.0" text="JBank Digital">
                <font>
                   <Font size="46.0" />
                </font>
             </Label>
-            <Label fx:id="firstNameText" layoutX="69.0" layoutY="129.0" prefHeight="45.0" prefWidth="422.0" text="*Name*">
-               <font>
-                  <Font size="16.0" />
-               </font></Label>
-            <Button fx:id="exitBtn" layoutX="993.0" layoutY="34.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="87.0" text="Exit" />
+            <Button fx:id="exitBtn" layoutX="788.0" layoutY="32.0" mnemonicParsing="false" onAction="#exit" prefHeight="51.0" prefWidth="87.0" text="Exit" />
             <Label layoutX="74.0" layoutY="181.0" prefHeight="45.0" prefWidth="202.0" text="Current amount:">
                <font>
                   <Font size="16.0" />
                </font></Label>
-            <Label fx:id="amountText" alignment="CENTER" layoutX="287.0" layoutY="181.0" prefHeight="45.0" prefWidth="183.0" text="***">
-               <font>
-                  <Font size="16.0" />
-               </font></Label>
-            <Button fx:id="transferBtn" layoutX="935.0" layoutY="156.0" mnemonicParsing="false" onAction="#tranferMoney" prefHeight="51.0" prefWidth="116.0" text="Transfer" />
-            <TableView fx:id="transactionsTable" layoutX="74.0" layoutY="242.0" prefHeight="413.0" prefWidth="977.0">
+            <Button fx:id="transferBtn" layoutX="722.0" layoutY="170.0" mnemonicParsing="false" onAction="#tranferMoney" prefHeight="51.0" prefWidth="116.0" text="Transfer" />
+            <TableView fx:id="transactionsTable" layoutX="80.0" layoutY="241.0" prefHeight="413.0" prefWidth="775.0">
               <columns>
                 <TableColumn fx:id="date1" prefWidth="132.0" text="Date" />
-                <TableColumn fx:id="type1" prefWidth="198.0" text="Type" />
+                <TableColumn fx:id="accountFrom" prefWidth="198.0" text="From" />
                   <TableColumn fx:id="amount1" prefWidth="229.0" text="Amount" />
-                  <TableColumn fx:id="toOrFrom" prefWidth="213.0" text="To/From" />
-                  <TableColumn fx:id="amountAfter" prefWidth="204.0" text="Amount After" />
+                  <TableColumn fx:id="accountTo" prefWidth="213.0" text="To" />
               </columns>
             </TableView>
+            <Label fx:id="helloLabel" alignment="CENTER" layoutX="75.0" layoutY="117.0" prefHeight="45.0" prefWidth="775.0" text="Hi" />
+            <Label fx:id="amountLabel" alignment="CENTER" layoutX="230.0" layoutY="181.0" prefHeight="45.0" prefWidth="188.0" text="\$$$" />
          </children>
       </Pane>
    </children>

@@ -1,6 +1,10 @@
 package Client;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import ClientServerCommunication.ActionResult;
+import ClientServerCommunication.Transaction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -65,10 +69,16 @@ public class TransferController {
     			resultLabel.setText("ERROR! Couldn't transfer money.");
     			resultLabel.setStyle("-fx-text-fill: red;");
     		}
-    		TransferBtn.setDisable(false);
-			accountIDText.setDisable(false);
-			amountText.setDisable(false);
+    		TransferBtn.setDisable(true);
+			accountIDText.setDisable(true);
+			amountText.setDisable(true);
 			amountLabel.setText(""+Client.getInstance().getUser().getAmount()+"¤");
+			
+			String currentDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+			Main.getMainMenuController().addNewTransactionToTheTable(new Transaction(currentDate,
+					Client.getInstance().getUser().getAccountID(),
+					Integer.parseInt(amountText.getText().toString())*(-1),
+					accountIDText.getText().toString()));
     	}
     }
     
@@ -81,6 +91,8 @@ public class TransferController {
 		 else {
 			 amountLabel.setStyle("-fx-text-fill: green;");
 		 }
+    	accountIDText.clear();
+    	amountText.clear();
     }
     
     @FXML
@@ -93,17 +105,16 @@ public class TransferController {
     @FXML
     void clear() {
     	accountIDText.clear();
+    	resultLabel.setText("");
     	amountText.clear();
-    	 amountLabel.setStyle("-fx-text-fill: black;");
-    	TransferBtn.setDisable(true);
-		accountIDText.setDisable(true);
-		amountText.setDisable(true);
+    	amountLabel.setStyle("-fx-text-fill: black;");
+    	TransferBtn.setDisable(false);
+		accountIDText.setDisable(false);
+		amountText.setDisable(false);
     }
     
 
 	public void setTransferResult(ActionResult actionResult) {
 		transferResult = actionResult;
 	}
-    
-
 }

@@ -27,19 +27,19 @@ public class Main extends Application{
 		this.window = primaryStage;
 		sceneController = new SceneController(window);
 		
+		loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
+        root = loader.load();
+        mainMenuScene = new Scene(root, 898, 699);
+        mainMenuScene.getStylesheets().add("Client/Style.css");
+        sceneController.add("MainMenu", mainMenuScene);
+        mainMenuController = (MainMenuController) loader.getController();
+		
 		loader = new FXMLLoader(getClass().getResource("TransferForm.fxml"));
         root = loader.load();
         transferScene = new Scene(root, 468, 380);
         transferScene.getStylesheets().add("Client/Style.css");
         sceneController.add("Transfer", transferScene);
         transferController = (TransferController) loader.getController();
-        
-        loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
-        root = loader.load();
-        mainMenuScene = new Scene(new FXMLLoader(getClass().getResource("MainMenu.fxml")).load(), 1124, 699);
-        mainMenuScene.getStylesheets().add("Client/Style.css");
-        sceneController.add("MainMenu", mainMenuScene);
-        mainMenuController = (MainMenuController) loader.getController();
         
     	loader = new FXMLLoader(getClass().getResource("LogInForm.fxml"));
         root = loader.load();
